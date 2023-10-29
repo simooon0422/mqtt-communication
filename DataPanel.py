@@ -1,14 +1,24 @@
-import paho.mqtt.client as mqtt
+import devices
 
 
-class DataPanel:
+class DataPanel(devices.Device):
     def __init__(self, address, publish_topic, subscribe_topic_1, subscribe_topic_2, subscribe_topic_3):
-        self.address = address
-        self.publish_topic = publish_topic
-        self.subscribe_topic_1 = subscribe_topic_1
-        self.subscribe_topic_2 = subscribe_topic_2
-        self.subscribe_topic_3 = subscribe_topic_3
+        super().__init__(address, publish_topic)
 
-        self.mqtt_broker = self.address
+        self.topics = [subscribe_topic_1, subscribe_topic_2, subscribe_topic_3]
+        self.topic_vars = [0, 0, 0]
 
-        self.client = mqtt.Client(self.publish_topic)
+    def _on_message(self, client, userdata, message):
+        self.data = message.payload.decode('utf-8')
+        print(f"Received {self.data}")
+
+    def _run(self):
+        for i in range(len(self.topics)):
+            self.client.subscribe(self.topics[i])
+        self.client.loop_start()
+
+        if self.end_thread:
+            self.client.loop_stop()
+            for i in range(len(self.topics)):
+                self.client.unsubscribe(self.topics[i])
+            return
