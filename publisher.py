@@ -6,7 +6,7 @@ import time
 import devices
 
 
-# mqtt_broker = "mqtt.eclipseprojects.io"
+mqtt_broker = "mqtt.eclipseprojects.io"
 # client = mqtt.Client("Temperature")
 # client.connect(mqtt_broker)
 #
@@ -19,6 +19,10 @@ import devices
 #     time.sleep(1)
 #     t = t + 1
 
+sensor = devices.TemperatureSensor(mqtt_broker, "Temperature")
+sensor.start()
+while True:
+    pass
 
 
 # for i in range(10):
