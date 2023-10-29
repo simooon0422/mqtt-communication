@@ -17,8 +17,8 @@ import DataPanel
 # client.on_message = on_message
 # time.sleep(30)
 # client.loop_stop()
-
-sub = DataPanel.DataPanel("mqtt.eclipseprojects.io", "Subscriber", "Temperature", "Humidity", "Pressure")
+sub_topics = ("Temperature", "Humidity", "Pressure")
+sub = DataPanel.DataPanel("mqtt.eclipseprojects.io", "Subscriber", sub_topics)
 sub.start()
 
 while True:
