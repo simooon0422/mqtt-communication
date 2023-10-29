@@ -54,24 +54,3 @@ class TemperatureSensor(Device):
         self._send_to_broker(self.temperature)
         time.sleep(1)
 
-
-class Subscriber(Device):
-    def __init__(self, address, publish_topic, subscribe_topic):
-        super().__init__(address, publish_topic)
-
-        self.subscribe_topic = subscribe_topic
-        self.client.on_message = self._on_message
-
-        self.data = -999
-
-    def _on_message(self, client, userdata, message):
-        self.data = message.payload.decode('utf-8')
-        print(f"Received {self.data}")
-
-    def _run(self):
-        self.client.subscribe(self.subscribe_topic)
-        self.client.loop_start()
-        if self.end_thread:
-            self.client.loop_stop()
-            self.client.unsubscribe(self.subscribe_topic)
-            return
