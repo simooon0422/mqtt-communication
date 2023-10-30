@@ -7,23 +7,20 @@ class DataPanel(devices.Device):
         super().__init__(address, publish_topic)
 
         self.subscribe_topics = subscribe_topics
-        self.topic_vars = [0, 0, 0]
+        self.N = len(self.subscribe_topics)
+        self.topic_vars = [0] * self.N
         self.GUI = GUI
 
         self.client.on_message = self._on_message
 
         if self.GUI:
             self.Panel = DataPanelGUI.DataPanelGUI(self.subscribe_topics, self.topic_vars)
+            self.Panel.update_variables(self.topic_vars)
 
     def _on_message(self, client, userdata, message):
-        if message._topic.decode('utf-8') == self.subscribe_topics[0]:
-            self.topic_vars[0] = message.payload.decode('utf-8')
-        elif message._topic.decode('utf-8') == self.subscribe_topics[1]:
-            self.topic_vars[1] = message.payload.decode('utf-8')
-        elif message._topic.decode('utf-8') == self.subscribe_topics[2]:
-            self.topic_vars[2] = message.payload.decode('utf-8')
-        else:
-            print(f"Error, topic received: {message._topic.decode('utf-8')}")
+        for i in range(self.N):
+            if message._topic.decode('utf-8') == self.subscribe_topics[i]:
+                self.topic_vars[i] = message.payload.decode('utf-8')
         print(f"Received {self.topic_vars}")
 
         if self.GUI:

@@ -47,7 +47,7 @@ class TemperatureSensor(Device):
         self.temperature = -999
 
     def _get_temp(self):
-        self.temperature = uniform(18, 22)
+        self.temperature = round(uniform(18, 22), 2)
 
     def _run_device(self):
         self._get_temp()
