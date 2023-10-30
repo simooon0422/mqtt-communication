@@ -19,9 +19,8 @@ import DataPanel
 # client.loop_stop()
 sub_topics = ("Temperature", "Humidity", "Pressure")
 sub = DataPanel.DataPanel("mqtt.eclipseprojects.io", "Subscriber", sub_topics, True)
-sub._run()
-time.sleep(5)
-sub.stop()
+sub.start()
+
 
 while True:
     pass

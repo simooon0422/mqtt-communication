@@ -19,8 +19,12 @@ mqtt_broker = "mqtt.eclipseprojects.io"
 #     time.sleep(1)
 #     t = t + 1
 
-sensor = devices.TemperatureSensor(mqtt_broker, "Temperature")
-sensor.start()
+sensor_t = devices.TemperatureSensor(mqtt_broker, "Temperature")
+sensor_h = devices.HumiditySensor(mqtt_broker, "Humidity")
+sensor_p = devices.PressureSensor(mqtt_broker, "Pressure")
+sensor_t.start()
+sensor_h.start()
+sensor_p.start()
 while True:
     pass
 

@@ -54,3 +54,31 @@ class TemperatureSensor(Device):
         self._send_to_broker(self.temperature)
         time.sleep(1)
 
+
+class HumiditySensor(Device):
+    def __init__(self, address, topic):
+        super().__init__(address, topic)
+        self.humidity = -999
+
+    def _get_hum(self):
+        self.humidity = round(uniform(0, 100), 0)
+
+    def _run_device(self):
+        self._get_hum()
+        self._send_to_broker(self.humidity)
+        time.sleep(1)
+
+
+class PressureSensor(Device):
+    def __init__(self, address, topic):
+        super().__init__(address, topic)
+        self.pressure = -999
+
+    def _get_press(self):
+        self.pressure = round(uniform(980, 1020), 0)
+
+    def _run_device(self):
+        self._get_press()
+        self._send_to_broker(self.pressure)
+        time.sleep(1)
+
