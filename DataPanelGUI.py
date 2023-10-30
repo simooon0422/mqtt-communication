@@ -34,12 +34,12 @@ class DataPanelGUI:
         pygame.display.flip()
 
 
-v_list = [0]
-panel = DataPanelGUI(v_list)
-while True:
-    v_list[0] += 1
-    panel.update_variables(v_list)
-    time.sleep(1)
-
-    if v_list[0] == 5:
-        panel.quit_GUI()
+# v_list = [0]
+# panel = DataPanelGUI(v_list)
+# while True:
+#     v_list[0] += 1
+#     panel.update_variables(v_list)
+#     time.sleep(1)
+#
+#     if v_list[0] == 5:
+#         panel.quit_GUI()
