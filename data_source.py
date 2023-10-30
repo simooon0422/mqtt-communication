@@ -1,13 +1,15 @@
-import time
 import devices
 
 
-t_sens = devices.TemperatureSensor("mqtt.eclipseprojects.io", "Temperature")
+mqtt_broker = "mqtt.eclipseprojects.io"
 
-t_sens.start()
-time.sleep(5)
-t_sens.stop()
 
+sensor_t = devices.TemperatureSensor(mqtt_broker, "Temperature")
+sensor_h = devices.HumiditySensor(mqtt_broker, "Humidity")
+sensor_p = devices.PressureSensor(mqtt_broker, "Pressure")
+sensor_t.start()
+sensor_h.start()
+sensor_p.start()
 
 while True:
     pass
