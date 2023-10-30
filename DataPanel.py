@@ -13,7 +13,7 @@ class DataPanel(devices.Device):
         self.client.on_message = self._on_message
 
         if self.GUI:
-            self.Panel = DataPanelGUI.DataPanelGUI(self.topic_vars)
+            self.Panel = DataPanelGUI.DataPanelGUI(self.subscribe_topics, self.topic_vars)
 
     def _on_message(self, client, userdata, message):
         if message._topic.decode('utf-8') == self.subscribe_topics[0]:
@@ -30,6 +30,7 @@ class DataPanel(devices.Device):
             self.Panel.update_variables(self.topic_vars)
 
     def _run(self):
+        self.client.connect(self.mqtt_broker)
         for i in range(len(self.subscribe_topics)):
             self.client.subscribe(self.subscribe_topics[i])
         self.client.loop_start()
@@ -39,7 +40,5 @@ class DataPanel(devices.Device):
                 self.client.loop_stop()
                 for i in range(len(self.subscribe_topics)):
                     self.client.unsubscribe(self.subscribe_topics[i])
-                if self.GUI:
-                    self.Panel.quit_GUI()
 
                 return
