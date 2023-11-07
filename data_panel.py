@@ -1,12 +1,12 @@
-import DataPanel
+import DataPanelGUI
 
 sub_topics = ("Temperature", "Humidity", "Pressure")
-sub = DataPanel.DataPanel("mqtt.eclipseprojects.io", "Subscriber", sub_topics, True)
+sub = DataPanelGUI.DataPanelGUI("mqtt.eclipseprojects.io", "Subscriber", sub_topics)
 sub.start()
 
 
 while True:
-    pass
+    sub.check_exit()
 
 
 
